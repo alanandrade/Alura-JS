@@ -4,38 +4,44 @@ titulo.textContent = "Aparecida Nutricionista";
 
 /* Calculo IMC */
 
-var paciente = document.querySelector("#primeiro-paciente");
+var pacientes = document.querySelectorAll(".paciente");
 
-var tdPeso = paciente.querySelector(".info-peso");
-var peso = tdPeso.textContent;
+for (var i = 0; i < pacientes.length; i++) {
 
-var tdAltura = paciente.querySelector(".info-altura");
-var altura = tdAltura.textContent;
+    var paciente = pacientes[i];
 
-/* Seleciona a Coluna do valor IMC */
-var tdImc = paciente.querySelector(".info-imc");
+    var tdPeso = paciente.querySelector(".info-peso");
 
-//Validação
+    var peso = tdPeso.textContent;
 
-var pesoEhValido = true;
-var alturaEhValida = true;
+    var tdAltura = paciente.querySelector(".info-altura");
+    var altura = tdAltura.textContent;
 
-if(peso <= 0 || peso >= 1000){
-    console.log("Peso inválido");
-    pesoEhValido = false;
-    tdImc.textContent = "Peso Inválido!";
-}
+    /* Seleciona a Coluna do valor IMC */
+    var tdImc = paciente.querySelector(".info-imc");
 
-if(altura <= 0 || altura >= 3.00){
-    console.log("Altura inválida");
-    alturaEhValida = false;
-    tdImc.textContent = "Altura Inválida!";
-}
+    //Validação
 
-// Exibi o Resultado se variaveis no parâmetro for true
-if(pesoEhValido && alturaEhValida){
-    var imc = peso / (altura * altura);
-    tdImc.textContent = imc;
-    //Verificando status das variaveis
-    console.log("Var pesoEhValido: " + pesoEhValido + " e " + "Var alturaEhValido: " + alturaEhValida);
+    var pesoEhValido = true;
+    var alturaEhValida = true;
+
+    if (peso <= 0 || peso >= 1000) {
+        console.log("Peso inválido");
+        pesoEhValido = false;
+        tdImc.textContent = "Peso Inválido!";
+    }
+
+    if (altura <= 0 || altura >= 3.00) {
+        console.log("Altura inválida");
+        alturaEhValida = false;
+        tdImc.textContent = "Altura Inválida!";
+    }
+
+    // Exibi o Resultado se variaveis no parâmetro for true
+    if (pesoEhValido && alturaEhValida) {
+        var imc = peso / (altura * altura);
+        tdImc.textContent = imc.toFixed(2);
+        //Verificando status das variaveis
+        console.log("Var pesoEhValido: " + pesoEhValido + " e " + "Var alturaEhValido: " + alturaEhValida);
+    }
 }
