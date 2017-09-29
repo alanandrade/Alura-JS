@@ -46,4 +46,14 @@ for (var i = 0; i < pacientes.length; i++) {
         //Verificando status das variaveis
         console.log("Var pesoEhValido: " + pesoEhValido + " e " + "Var alturaEhValido: " + alturaEhValida);
     }
+} /* Fecha loop FOR */
+
+
+
+/* Adicionando na Tabela */
+var botaoAdicionar = document.querySelector("#adicionar-paciente");
+botaoAdicionar.addEventListener("click", funcaoQueFazAlgo);
+
+function funcaoQueFazAlgo() {
+    console.log("Oi, cliquei no  botão.");
 }
