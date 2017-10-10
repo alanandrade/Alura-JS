@@ -9,9 +9,12 @@ botaoAdicionar.addEventListener("click", function(event) {
 
     var pacienteTr = montaTr(paciente);
 
-    if(!validaPaciente(paciente)){
-        console.log("Paciente Inválido");
-        return; //Se valida paciente não(!) for valido, Um return vazio faz com que saiamos imediatamente da função, sem executar nenhum código que esteja abaixo dele
+    var erro = validaPaciente(paciente);
+
+    if (erro.length > 0){
+        var mensagemErro = document.querySelector("#mensagem-erro");
+        mensagemErro.textContent = erro;
+        return; ///Se valida paciente não(!) for valido, Um return vazio faz com que saiamos imediatamente da função, sem executar nenhum código que esteja abaixo dele
     }
 
     // Seleciona tabela para add paciente
@@ -56,10 +59,17 @@ function montaTd(dado, classe){
     return td;
 }
 
-function validaPaciente(paciente){
-    if(validaPeso(paciente.peso)){
-        return true;
-    } else {
-        return false;
+function validaPaciente(paciente){ //Chama funcao
+
+    var erros = [];
+
+    if(!validaPeso(paciente.peso)){ //Passa como parâmetro para a funcao de validar, o value do input peso || ! (E se o peso não for válido)
+        erros.push("Peso é inválido");
+    } 
+
+    if(!validaAltura(paciente.altura)) {
+        erros.push("Altura é inválida");
     }
+
+    return erros;
 }
