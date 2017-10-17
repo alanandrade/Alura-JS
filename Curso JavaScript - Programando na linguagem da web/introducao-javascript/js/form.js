@@ -1,21 +1,19 @@
 /* Adicionando na Tabela */
 var botaoAdicionar = document.querySelector("#adicionar-paciente");
-botaoAdicionar.addEventListener("click", function(event) {
-    event.preventDefault();
 
+botaoAdicionar.addEventListener("click", function (event) {
+    
+    event.preventDefault(); //Evento padrão, sem pré-configuração do btn
     var form = document.querySelector("#form-adiciona");
-
     var paciente = obtemPacienteDoFormulario(form);
+    var erros = validaPaciente(paciente);
+
+    if (erros.length > 0) {
+        exibeMensagemDeErro(erros);
+        return;
+    }
 
     var pacienteTr = montaTr(paciente);
-
-    var erro = validaPaciente(paciente);
-
-    if (erro.length > 0){
-        var mensagemErro = document.querySelector("#mensagem-erro");
-        mensagemErro.textContent = erro;
-        return; ///Se valida paciente não(!) for valido, Um return vazio faz com que saiamos imediatamente da função, sem executar nenhum código que esteja abaixo dele
-    }
 
     // Seleciona tabela para add paciente
     var tabela = document.querySelector("#tabela-pacientes");
@@ -25,14 +23,14 @@ botaoAdicionar.addEventListener("click", function(event) {
     form.reset(); //Reseta dados enviados dos input do form
 });
 
-function obtemPacienteDoFormulario(form){
+function obtemPacienteDoFormulario(form) {
     //Criando o Objeto Paciente
     var paciente = {
-        nome : form.nome.value,
-        peso : form.peso.value,
-        altura : form.altura.value,
-        gordura : form.gordura.value,
-        imc : calculaImc(form.peso.value, form.altura.value)
+        nome: form.nome.value,
+        peso: form.peso.value,
+        altura: form.altura.value,
+        gordura: form.gordura.value,
+        imc: calculaImc(form.peso.value, form.altura.value)
     }
 
     return paciente;
@@ -51,7 +49,7 @@ function montaTr(paciente) {
     return pacienteTr;
 }
 
-function montaTd(dado, classe){
+function montaTd(dado, classe) {
     var td = document.createElement("td");
     td.classList.add(classe);
     td.textContent = dado;
@@ -59,17 +57,43 @@ function montaTd(dado, classe){
     return td;
 }
 
-function validaPaciente(paciente){ //Chama funcao
+function validaPaciente(paciente) { //Chama funcao
 
     var erros = [];
 
-    if(!validaPeso(paciente.peso)){ //Passa como parâmetro para a funcao de validar, o value do input peso || ! (E se o peso não for válido)
-        erros.push("Peso é inválido");
-    } 
+    if(paciente.nome.length == 0) {
+        erros.push("O campo nome não pode ser em branco");
+    }
 
-    if(!validaAltura(paciente.altura)) {
+    if(paciente.gordura.length == 0){
+        erros.push("O campo gorgura não pode ser em branco");
+    }
+
+    if (paciente.peso.length == 0) {
+        erros.push("O peso não pode ser em branco");
+    }
+
+    if (paciente.altura.length == 0) {
+        erros.push("A altura não pode ser em branco");
+    }
+
+    if (!validaPeso(paciente.peso)) { //Passa como parâmetro para a funcao de validar, o value do input peso || ! (E se o peso não for válido)
+        erros.push("Peso é inválido");
+    }
+
+    if (!validaAltura(paciente.altura)) {
         erros.push("Altura é inválida");
     }
 
     return erros;
+}
+
+function exibeMensagemDeErro(erros) {
+    var ul = document.querySelector("#mensagens-erro");
+
+    erros.forEach(function (erro) { //para cada item do array, nós fazemos alguma coisa. "Fazer alguma coisa", geralmente é uma função:
+        var li = document.createElement("li");
+        li.textContent = erro;
+        ul.appendChild(li);
+    });
 }
