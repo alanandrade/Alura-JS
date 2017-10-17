@@ -5,8 +5,8 @@ botaoAdicionar.addEventListener("click", function (event) {
     
     event.preventDefault(); //Evento padrão, sem pré-configuração do btn
     var form = document.querySelector("#form-adiciona");
-    var paciente = obtemPacienteDoFormulario(form);
-    var erros = validaPaciente(paciente);
+    var paciente = obtemPacienteDoFormulario(form); //Obtem o array de values inseridos nos inputs, através do parametro form
+    var erros = validaPaciente(paciente); //adiciona a function validaPacientes
 
     if (erros.length > 0) {
         exibeMensagemDeErro(erros);
